@@ -1,10 +1,10 @@
 # Booth Builder (Web)
 
 The Web build of Booth Builder, Robinson Show Services' trade-show booth planner, served by GitHub Pages at
-https://s-mireles.github.io/booth_builder_web/.
+https://bisty-b.github.io/booth-builder-web/.
 
 It runs in desktop and tablet browsers. Its catalogue of items loads from
-https://s-mireles.github.io/booth_builder_catalogue/ each time it starts, and each item's 3D model downloads the first
+https://bisty-b.github.io/booth-builder-catalogue/ each time it starts, and each item's 3D model downloads the first
 time it's needed.
 
 ## These files
