@@ -264,13 +264,13 @@ body {
 			Your browser does not support the canvas tag.
 		</canvas>
 
-		<noscript>
-			Your browser does not support JavaScript.
-		</noscript>
-
 		<div id="loading" class="screen" role="status" aria-live="polite">
 			<div id="loading-column">
 				<h1>Booth Builder</h1>
+				<noscript>
+					<style>#loading-body { display: none; }</style>
+					<p id="loading-note" class="error">Booth Builder needs JavaScript. Turn it on in the browser's settings, then reload the page.</p>
+				</noscript>
 				<div id="loading-body">
 					<div id="loading-bar"><div id="loading-fill"></div></div>
 					<ol id="loading-steps"></ol>
@@ -282,7 +282,7 @@ body {
 
 		<script src="index.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":1816700,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":1947212,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 
@@ -427,13 +427,9 @@ const engine = new Engine(GODOT_CONFIG);
 	});
 
 	function displayFailureNotice(err) {
+		// The engine's own message goes to the console; the page says what to do.
 		console.error(err);
-		let text = 'An unknown error occurred.';
-		if (err instanceof Error) {
-			text = err.message;
-		} else if (typeof err === 'string') {
-			text = err;
-		}
+		const text = typeof err === 'string' ? err : 'Booth Builder couldn\'t start. Check the internet connection, then reload the page.';
 		clearTimeout(failsafe);
 		pageSteps.concat(appSteps).forEach(function (step) {
 			if (step.state === 'active') {
@@ -482,7 +478,8 @@ const engine = new Engine(GODOT_CONFIG);
 		threads: GODOT_THREADS_ENABLED,
 	});
 	if (missing.length !== 0) {
-		displayFailureNotice('This browser can\'t run Booth Builder. It\'s missing: ' + missing.join(', ') + '.');
+		console.warn('Missing browser features: ' + missing.join(', '));
+		displayFailureNotice('This browser can\'t show Booth Builder\'s 3D graphics. Open Booth Builder in an up-to-date Chrome, Edge, Firefox or Safari, or on another computer.');
 		return;
 	}
 	engine.startGame({
